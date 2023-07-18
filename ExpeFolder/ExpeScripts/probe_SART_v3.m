@@ -20,13 +20,10 @@ if flag_bip
 end
 startProbe=Screen('Flip',w);
 if flag_PPort
-    outputSingleScan(s,trig_probestart);
+    SendTrigger(trig_probestart);
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('P%g',this_probe));
-end
-if flag_PPort
-    outputSingleScan(s,trig_reset);
 end
 WaitSecs(0.5);
 if flag_bip
@@ -56,15 +53,12 @@ for nQ=1:length(supervised_questions)
 
     end
     if flag_PPort
-        outputSingleScan(s,trig_startQuestion);
+        SendTrigger(trig_startQuestion);
     end
     % Wait for response
     [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
     while keyIsDown==0 || isempty(find(ismember(find(keyCode),myKeyMap(supervised_questions_acceptedanswers{nQ}))))
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
-    end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
     end
     
     KbReleaseWait(-1);
@@ -83,12 +77,15 @@ for nQ=1:length(supervised_questions)
     if nQ==2
         stateresp=probe_responses(nQ,4);
     end
+       if flag_PPort
+        SendTrigger(trig_startQuestion+keyPressed);
+    end
     WaitSecs(0.5);
 end
 probe_res=[probe_res ; [this_probe this_probetime startProbe nblock this_blockcond ntrial probe_responses(:,1)' probe_responses(:,2)' probe_responses(:,3)' probe_responses(:,4)']];
 
 if flag_PPort
-    outputSingleScan(s,trig_probeend);
+    SendTrigger(trig_probeend);
 end
 if flag_1diodes % at the begining of each probe, turn the din1 to white
     Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
@@ -98,9 +95,6 @@ if flag_1diodes % at the begining of each probe, turn the din1 to white
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('EP%g',this_probe));
-end
-if flag_PPort
-    outputSingleScan(s,trig_reset);
 end
 DrawFormattedText(w, 'Get ready to resume the task', 'center', 'center', [255, 255, 255]);
 Screen('Flip',w);

@@ -30,27 +30,27 @@ probe_res=[];
 % if ismac
 %     root_path='/Users/Thomas/Work/PostDoc/Monash/WanderIM/ExpeFolder/ExpeScripts';
 % else
-root_path='/Users/tand0009/Work/PostDoc/Monash/WanderIM/ExpeFolder/ExpeScripts';
+root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
 % end
 cd(root_path)
 addpath(pwd)
 % add PTB in the path
-PTB_path='/Applications/Psychtoolbox/';
-if exist('Screen')~=3
-    addpath(genpath(PTB_path));
-    fprintf('... adding PTB to the path\n')
-end
+% PTB_path='/Applications/Psychtoolbox/';
+% if exist('Screen')~=3
+%     addpath(genpath(PTB_path));
+%     fprintf('... adding PTB to the path\n')
+% end
 all_GrandStart=GetSecs;
 
 stim_path=[root_path filesep '..' filesep 'ExpeStim'];
 
 % Select debug mode (1 or 0), EEG (1 or 0), Tobii (1 or 0)
-flag_smallw     = 1;
+flag_smallw     = 0;
 answerdebug=input('Type 0 (no) or 1 (yes, debug)');
 flag_debug      = answerdebug;
-flag_EEG        = 0; % EEG segments to be added in the future
-flag_PPort      = 0; % Set to 1 if there is a parallel port to send triggers
-flag_EyeLink      = 0; % Tobii segments to be added in the future
+flag_EEG        = 1; % EEG segments to be added in the future
+flag_PPort      = 1; % Set to 1 if there is a parallel port to send triggers
+flag_EyeLink      = 1; % Tobii segments to be added in the future
 flag_skiptraining = 0;
 flag_skipbaseline = 0;
 flag_2diodes     = 0;
@@ -123,34 +123,31 @@ SubjectInfo.FlickerR=flicker_freqR;
 %% EEG
 if flag_EEG
     % Check that the MEX file io64 is in the path
-    if flag_PPort
-        s=daq.createSession('ni');
-        addDigitalChannel(s,'Dev1','Port0/Line0:7','OutputOnly');
-    end
+   OpenParPort( 64 );
     answerdebug2=input('Press 1 if EEG is recording (0 to abort):');
     if answerdebug2==0
         flag_escp=1;
     else
         WaitSecs(3);
-        
+%         SendTrigger( marqueurMessage );
+
         if flag_PPort
             % Code for triggers (must be between 0 and 255)
             %start/end recording
-            trig_start          =[1,0,0,0,0,0,0,0]; %S
-            trig_end            =[0,1,0,0,0,0,0,0]; %E
-            trig_startBlock     =[0,0,1,0,0,0,0,0]; %B
-            trig_endBlock       =[0,0,0,1,0,0,0,0]; %K
-            trig_startTrial     =[0,0,0,0,1,0,0,0]; %T
-            trig_startQuestion  =[0,0,0,0,0,1,0,0]; %Q
-            trig_probestart     =[0,0,0,0,0,0,1,0]; %P
-            trig_probeend       =[0,0,0,0,0,0,0,1]; %C
+            trig_start          = 1; %S
+            trig_end            = 11; %E
+            trig_startBlock     = 2; %B
+            trig_endBlock       = 22; %K
+            trig_startTrial     = 64; %T
+            trig_startQuestion  = 128; %Q
+            trig_probestart     = 3; %P
+            trig_probeend       = 33; %C
+            trig_response       = 5; %C
             
-            trig_reset      =[0,0,0,0,0,0,0,0];
             % Send a first trigger
-            outputSingleScan(s,trig_start);
+            SendTrigger(trig_start);
             fprintf('>>>>>> CHECK START TRIGGER HAS BEEN SENT\n');
             WaitSecs(1);
-            outputSingleScan(s,trig_reset);
         end
     end
 else
@@ -192,7 +189,7 @@ if flag_smallw
     w = Screen('OpenWindow', numscreen, 0, [0, 0, 1200, 700]);
     InstrFont=36;
 else
-    w = Screen('OpenWindow', 0, 0, []);
+    w = Screen('OpenWindow', 2, 0, []);
     InstrFont=58;
     HideCursor;
 end
@@ -294,8 +291,9 @@ if length(KbIndexes)==1
         myKeyMap=[30 31 32 33]; % for 1, 2, 3, 4
         AbortKey='Escape';
     elseif IsWindows
-        myKeyMap=[100 101 102 107]; % for 1, 2, 3, 4
-        AbortKey='ESCAPE';
+        myKeyMap=[49 50 51 52]; % for 1, 2, 3, 4
+        AbortKey='esc';
+        AbortKeyIndex=27;
     else
         %     myKeyMap=[100 101 102 107]; % for 1, 2, 3, 4
         myKeyMap=[84 85 86 87]; % for 1, 2, 3, 4
@@ -308,9 +306,10 @@ else
         myKeyMap=[30 31 32 33]; % for 1, 2, 3, 4
         AbortKey='Escape';
     elseif IsWindows
-        myKeyMap=[100 101 102 107]; % for 1, 2, 3, 4
-        AbortKey='ESCAPE';
-    else
+        myKeyMap=[49 50 51 52]; % for 1, 2, 3, 4
+        AbortKey='esc';
+          AbortKeyIndex=27;
+  else
         %     myKeyMap=[100 101 102 107]; % for 1, 2, 3, 4
         myKeyMap=[84 85 86 87]; % for 1, 2, 3, 4
         %     myKeyMap=[30 31 32 33]; % for 1, 2, 3, 4
@@ -425,7 +424,7 @@ else
     trai_res=[];
     if flag_skiptraining==0
         if flag_PPort
-            outputSingleScan(s,trig_start);
+            SendTrigger(trig_start);
         end
         
         % Prepare double flickering for this block
@@ -508,7 +507,7 @@ DrawFormattedText(w,sprintf('You performance was\n%2.1f %%(press)\n%2.1f %%(no-p
         Screen('Flip',w);
         
         if flag_PPort
-            outputSingleScan(s,trig_end);
+            SendTrigger(trig_end);
         end
     end
     Screen('Flip',w);
@@ -605,9 +604,9 @@ while nblock < maxblock && flag_escp==0
     all_tstartblock(nblock)=GetSecs;
     if flag_PPort
         %         io64(useioObj,pcode,trig_startBlock);
-        outputSingleScan(s,trig_startBlock);
+        SendTrigger(trig_startBlock);
     end
-    if flag_EEG % at the begining of each probe, turn the din1 to white
+    if flag_1diodes % at the begining of each probe, turn the din1 to white
         Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
         Screen('Flip',w);
         WaitSecs(0.3);

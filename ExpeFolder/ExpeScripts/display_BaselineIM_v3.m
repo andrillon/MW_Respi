@@ -40,9 +40,7 @@ Screen('Flip',w);
 KbWait(-1);
 
 if flag_PPort
-    outputSingleScan(s,trig_start);
-    WaitSecs(0.1);
-    outputSingleScan(s,trig_reset);
+    SendTrigger(trig_start);
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('BA'));
@@ -59,7 +57,7 @@ for nloop=1:2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
         if keyIsDown==1
             keypressed=find(keyCode); keypressed=keypressed(1);
-            if KbName(AbortKey)==keypressed
+            if AbortKeyIndex==keypressed
                 flag_escp=1;
             end
         end
@@ -69,9 +67,9 @@ for nloop=1:2
         continue;
      end
     
-    if flag_PPort
-        outputSingleScan(s,trig_startBlock);
-    end
+%     if flag_PPort
+%         SendTrigger(trig_startBlock);
+%     end
     if flag_EyeLink
         Eyelink('Message', sprintf('B%g_S%g',nloop,1));
     end
@@ -80,9 +78,6 @@ for nloop=1:2
         Screen('Flip',w);
         WaitSecs(0.3);
         Screen('Flip',w);
-    end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
     end
     thisFaceL=pertask_imge_indexes{2}(3+nloop,1);
     thisFaceR=pertask_imge_indexes{2}(3+nloop,2);
@@ -123,7 +118,7 @@ for nloop=1:2
     end
     Screen('Flip',w);
     if flag_PPort
-        outputSingleScan(s,trig_endBlock);
+        SendTrigger(trig_endBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,1));
@@ -132,9 +127,6 @@ for nloop=1:2
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
     
     %% Display flickering faces with GAP
     % prepare drawing
@@ -144,7 +136,7 @@ for nloop=1:2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
         if keyIsDown==1
             keypressed=find(keyCode); keypressed=keypressed(1);
-            if KbName(AbortKey)==keypressed
+            if AbortKeyIndex==keypressed
                 flag_escp=1;
             end
         end
@@ -155,7 +147,7 @@ for nloop=1:2
     end
     
     if flag_PPort
-        outputSingleScan(s,trig_startBlock);
+        SendTrigger(trig_startBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('B%g_S%g',nloop,2));
@@ -165,9 +157,6 @@ for nloop=1:2
         Screen('Flip',w);
         WaitSecs(0.3);
         Screen('Flip',w);
-    end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
     end
     RightRectGap=RightRect+[0 0.01*wy 0 0.01*wx];
     LeftRectGap=LeftRect+[0 -0.01*wy 0 -0.01*wy];
@@ -208,7 +197,7 @@ for nloop=1:2
     end
     Screen('Flip',w);
     if flag_PPort
-        outputSingleScan(s,trig_endBlock);
+        SendTrigger(trig_endBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,2));
@@ -217,9 +206,6 @@ for nloop=1:2
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
     %% Display flickering squares
     DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+3), 'center', 'center', [255 255 255]);
     tpSt=Screen('Flip',w);
@@ -227,7 +213,7 @@ for nloop=1:2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
         if keyIsDown==1
             keypressed=find(keyCode); keypressed=keypressed(1);
-            if KbName(AbortKey)==keypressed
+            if AbortKeyIndex==keypressed
                 flag_escp=1;
             end
         end
@@ -238,7 +224,7 @@ for nloop=1:2
      end
     
     if flag_PPort
-        outputSingleScan(s,trig_startBlock);
+        SendTrigger(trig_startBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('B%g_S%g',nloop,3));
@@ -248,9 +234,6 @@ for nloop=1:2
         Screen('Flip',w);
         WaitSecs(0.3);
         Screen('Flip',w);
-    end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
     end
     thisSquareL=pertask_imge_indexes{3}(1);
     thisSquareR=pertask_imge_indexes{3}(2);
@@ -291,7 +274,7 @@ for nloop=1:2
     end
     Screen('Flip',w);
     if flag_PPort
-        outputSingleScan(s,trig_endBlock);
+        SendTrigger(trig_endBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,3));
@@ -300,9 +283,6 @@ for nloop=1:2
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
     %% Display flickering squares
     DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+4), 'center', 'center', [255 255 255]);
     tpSt=Screen('Flip',w);
@@ -310,7 +290,7 @@ for nloop=1:2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
         if keyIsDown==1
             keypressed=find(keyCode); keypressed=keypressed(1);
-            if KbName(AbortKey)==keypressed
+            if AbortKeyIndex==keypressed
                 flag_escp=1;
             end
         end
@@ -322,7 +302,7 @@ for nloop=1:2
     
     % prepare drawing
     if flag_PPort
-        outputSingleScan(s,trig_startBlock);
+        SendTrigger(trig_startBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('B%g_S%g',nloop,4));
@@ -332,9 +312,6 @@ for nloop=1:2
         Screen('Flip',w);
         WaitSecs(0.3);
         Screen('Flip',w);
-    end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
     end
     thisSquareL=pertask_imge_indexes{4}(1);
     thisSquareR=pertask_imge_indexes{4}(2);
@@ -375,7 +352,7 @@ for nloop=1:2
     end
     Screen('Flip',w);
     if flag_PPort
-        outputSingleScan(s,trig_endBlock);
+        SendTrigger(trig_endBlock);
     end
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,4));
@@ -384,18 +361,14 @@ for nloop=1:2
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
+
 end
  Screen('Flip',w);
     WaitSecs(1);
     Screen('Flip',w);
     
 if flag_PPort
-    outputSingleScan(s,trig_end);
-    WaitSecs(0.1);
-    outputSingleScan(s,trig_reset);
+    SendTrigger(trig_end);
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('EBA'));

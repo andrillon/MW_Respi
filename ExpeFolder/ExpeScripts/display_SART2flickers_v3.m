@@ -16,40 +16,38 @@ WaitSecs(2);
 
 imge_indexes=pertask_imge_indexes{thiset};
 if flag_PPort
-    outputSingleScan(s,trig_startBlock);
-    WaitSecs(0.1);
-    outputSingleScan(s,trig_reset);
+    SendTrigger(trig_startBlock);
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('B%g',nblock));
 end
 %% play SART
+resprec=0;
 if this_blockcond==1 % faces
     %%% Init
     starttra=GetSecs;
     ntrial=1;
     block_starttime(nblock)=GetSecs;
+    this_seq_trial=all_seq(ntrial);
+    this_image_L=imge_indexes(this_seq_trial,1);
+    this_image_R=imge_indexes(this_seq_trial,2);
+    dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
+    
     % Start with 3s of fixation cross
     Screen('DrawLines', w, [cross_xCoords; cross_yCoords], cross_lineWidthPix, cross_colour, [wx, wy]./2, 2);
     Screen('Flip',w);
     while GetSecs<starttra+2
     end
     if flag_PPort
-        outputSingleScan(s,trig_startTrial);
+        SendTrigger(trig_startTrial+this_seq_trial);
     end
     if flag_EyeLink
-        Eyelink('Message', sprintf('B%g_T%g',nblock,ntrial));
+        Eyelink('Message', sprintf('B%g_T%g_S%g',nblock,ntrial,this_seq_trial));
     end
     if flag_1diodes % at the begining of each probe, turn the din1 to white
         Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
     end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
-    this_seq_trial=all_seq(ntrial);
-    this_image_L=imge_indexes(this_seq_trial,1);
-    this_image_R=imge_indexes(this_seq_trial,2);
-    dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
+    
     
     Screen('DrawTexture', w, this_image_R,[],RightRect,[],[]);
     Screen('DrawTexture', w, this_image_L,[],LeftRect,[],[]);
@@ -78,14 +76,16 @@ if this_blockcond==1 % faces
                 Screen('FillPoly', w ,[1 1 1]*255, din1_pos);
             end
         end
-        resprec=0;
         
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && resprec==0
+            if keyIsDown && (resprec==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
                 thisresptime=keySecs;
                 resprec=1;
+                if flag_PPort
+                    SendTrigger(trig_response);
+                end
             end
             if GetSecs>this_probetime
                 probe_SART_v3;
@@ -99,6 +99,7 @@ if this_blockcond==1 % faces
         count=count+1;
         
         if GetSecs>stimonset+dur_face_presentation_rand % update face identity
+            resprec=0;
             this_nogo=NaN;
             this_go=NaN;
             if this_seq_trial==TargetID && isnan(thisresp)
@@ -111,7 +112,7 @@ if this_blockcond==1 % faces
             elseif  this_seq_trial~=TargetID && ~isnan(thisresp) %&& strcmp(KbName(thisresp(1)),'space')
                 this_go=1;
             end
-            if thisresp==KbName(AbortKey)
+            if thisresp==AbortKeyIndex
                 flag_escp=1;
             end
             fprintf('NOGO: %g | GO: %g\n',this_nogo,this_go)
@@ -126,16 +127,13 @@ if this_blockcond==1 % faces
             thisresptime=NaN;
             thisresp=NaN;
             if flag_PPort
-                outputSingleScan(s,trig_startTrial);
+                SendTrigger(trig_startTrial+this_seq_trial);
             end
             if flag_EyeLink
-                Eyelink('Message', sprintf('B%g_T%g',nblock,ntrial));
+                Eyelink('Message', sprintf('B%g_T%g_S%g',nblock,ntrial,this_seq_trial));
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
-            end
-            if flag_PPort
-                outputSingleScan(s,trig_reset);
             end
         end
         
@@ -148,28 +146,28 @@ elseif this_blockcond==2
     starttra=GetSecs;
     ntrial=1;
     block_starttime(nblock)=GetSecs;
+    
+    dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
+    
+    this_seq_trial=all_seq(ntrial);
+    this_image_L=imge_indexes(1);
+    this_image_R=imge_indexes(2);
+    
     % Start with 3s of fixation cross
     Screen('DrawLines', w, [cross_xCoords; cross_yCoords], cross_lineWidthPix, cross_colour, [wx, wy]./2, 2);
     Screen('Flip',w);
     while GetSecs<starttra+2
     end
     if flag_PPort
-        outputSingleScan(s,trig_startTrial);
+        SendTrigger(trig_startTrial+this_seq_trial);
     end
     if flag_EyeLink
-        Eyelink('Message', sprintf('B%g_T%g',nblock,ntrial));
+        Eyelink('Message', sprintf('B%g_T%g_S%g',nblock,ntrial,this_seq_trial));
     end
     if flag_1diodes % at the begining of each probe, turn the din1 to white
         Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
     end
-    if flag_PPort
-        outputSingleScan(s,trig_reset);
-    end
-    dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
     
-    this_seq_trial=all_seq(ntrial);
-    this_image_L=imge_indexes(1);
-    this_image_R=imge_indexes(2);
     
     Screen('DrawTexture', w, this_image_R,[],RightRect,[],[]);
     Screen('DrawTexture', w, this_image_L,[],LeftRect,[],[]);
@@ -207,14 +205,16 @@ elseif this_blockcond==2
                 Screen('FillPoly', w ,[1 1 1]*255, din1_pos);
             end
         end
-        resprec=0;
         
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && resprec==0
+            if keyIsDown && (resprec==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
                 thisresptime=keySecs;
                 resprec=1;
+                if flag_PPort
+                    SendTrigger(trig_response);
+                end
             end
             if GetSecs>this_probetime
                 probe_SART_v3;
@@ -228,6 +228,7 @@ elseif this_blockcond==2
         count=count+1;
         
         if GetSecs>stimonset+dur_face_presentation_rand % update face identity
+            resprec=0;
             this_nogo=NaN;
             this_go=NaN;
             if this_seq_trial==TargetID && isnan(thisresp)
@@ -240,7 +241,7 @@ elseif this_blockcond==2
             elseif  this_seq_trial~=TargetID && ~isnan(thisresp) %&& strcmp(KbName(thisresp(1)),'space')
                 this_go=1;
             end
-            if thisresp==KbName(AbortKey)
+            if thisresp==AbortKeyIndex
                 flag_escp=1;
             end
             fprintf('NOGO: %g | GO: %g\n',this_nogo,this_go)
@@ -253,16 +254,13 @@ elseif this_blockcond==2
             thisresptime=NaN;
             thisresp=NaN;
             if flag_PPort
-                outputSingleScan(s,trig_startTrial);
+                SendTrigger(trig_startTrial+this_seq_trial);
             end
             if flag_EyeLink
-                Eyelink('Message', sprintf('B%g_T%g',nblock,ntrial));
+                Eyelink('Message', sprintf('B%g_T%g_S%g',nblock,ntrial,this_seq_trial));
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
-            end
-            if flag_PPort
-                outputSingleScan(s,trig_reset);
             end
         end
         
@@ -273,9 +271,7 @@ end
 %% end block
 Screen('Flip',w);
 if flag_PPort
-    outputSingleScan(s,trig_endBlock);
-    WaitSecs(0.1);
-    outputSingleScan(s,trig_reset);
+    SendTrigger(trig_endBlock);
 end
 if flag_EyeLink
     Eyelink('Message', sprintf('EB%g',nblock));

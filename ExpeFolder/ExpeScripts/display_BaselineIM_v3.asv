@@ -125,17 +125,15 @@ for nloop=1:2
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,1));
     end
-    %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
     
     %% Display flickering faces with GAP
     % prepare drawing
-    %DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+2), 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, sprintf('La séquence %g (sur 8) va commencer',(nloop-1)*4+2), 'center', 'center', [255 255 255]);
-    tpSt=Screen('Flip',w);
+    DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+2), 'center', 'center', [255 255 255]);
+   tpSt=Screen('Flip',w);
     while GetSecs<tpSt+2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
         if keyIsDown==1
@@ -206,14 +204,12 @@ for nloop=1:2
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,2));
     end
-    %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
     %% Display flickering squares
-    %DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+3), 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, sprintf('La séquence %g (sur 8) va commencer',(nloop-1)*4+3), 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+3), 'center', 'center', [255 255 255]);
     tpSt=Screen('Flip',w);
     while GetSecs<tpSt+2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
@@ -285,14 +281,12 @@ for nloop=1:2
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,3));
     end
-    %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
     %% Display flickering squares
-    %DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+4), 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, sprintf('La séquence %g (sur 8) va commencer',(nloop-1)*4+4), 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, sprintf('The sequence %g (out of 8) will start shortly',(nloop-1)*4+4), 'center', 'center', [255 255 255]);
     tpSt=Screen('Flip',w);
     while GetSecs<tpSt+2
         [keyIsDown, secs, keyCode, deltaSecs] = KbCheck(-1);
@@ -365,8 +359,7 @@ for nloop=1:2
     if flag_EyeLink
         Eyelink('Message', sprintf('EB%g_S%g',nloop,4));
     end
-    %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);

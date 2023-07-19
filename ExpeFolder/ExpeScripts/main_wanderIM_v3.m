@@ -1,19 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Project WANDERLUST - INTERMODULATION
+%%%%% Project Wanderin Respiration
 %%%%%
 %%%%%
 %%%%%
 %%%%% Written by Thomas Andrillon
 %%%%% Email: thomas.andrillon@gmail.com
 %%%%%
-%%%%% v2:
-%%%%%   - calibration and training added
-%%%%%   - sound added to probe
-%%%%%   - modifications of kanisza squares
-%%%%%   - modified version
-%%%%% v3:
-%%%%%   - correction of bug from v2 (num of probes, RT saving)
-%%%%%   - adaptation of the script to the Psych Building EEG set-up
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% init matlab
@@ -27,11 +19,11 @@ test_res=[];
 probe_res=[];
 
 % add the folder in the path
-% if ismac
-%     root_path='/Users/Thomas/Work/PostDoc/Monash/WanderIM/ExpeFolder/ExpeScripts';
-% else
+if ismac
+    root_path='/Users/thandrillon/Work/ICM/MW_Respi/ExpeFolder/ExpeScripts';
+else
 root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
-% end
+end
 cd(root_path)
 addpath(pwd)
 % add PTB in the path
@@ -45,14 +37,14 @@ all_GrandStart=GetSecs;
 stim_path=[root_path filesep '..' filesep 'ExpeStim'];
 
 % Select debug mode (1 or 0), EEG (1 or 0), Tobii (1 or 0)
-flag_smallw     = 0;
+flag_smallw     = 1;
 answerdebug=input('Type 0 (no) or 1 (yes, debug)');
 flag_debug      = answerdebug;
-flag_EEG        = 1; % EEG segments to be added in the future
-flag_PPort      = 1; % Set to 1 if there is a parallel port to send triggers
-flag_EyeLink      = 1; % Tobii segments to be added in the future
+flag_EEG        = 0; % EEG segments to be added in the future
+flag_PPort      = 0; % Set to 1 if there is a parallel port to send triggers
+flag_EyeLink      = 0; % Tobii segments to be added in the future
 flag_skiptraining = 0;
-flag_skipbaseline = 0;
+flag_skipbaseline = 1;
 flag_2diodes     = 0;
 flag_1diodes     = 0;
 flag_bip         = 0;
@@ -289,8 +281,9 @@ KbIndex=max(KbIndexes);
 if length(KbIndexes)==1
     if ismac
         myKeyMap=[30 31 32 33]; % for 1, 2, 3, 4
-        AbortKey='Escape';
-    elseif IsWindows
+        AbortKey='ESCAPE';
+         AbortKeyIndex=41;
+   elseif IsWindows
         myKeyMap=[49 50 51 52]; % for 1, 2, 3, 4
         AbortKey='esc';
         AbortKeyIndex=27;
@@ -304,8 +297,9 @@ else
     %     myKeyMap=[100 101 102 107];
     if ismac
         myKeyMap=[30 31 32 33]; % for 1, 2, 3, 4
-        AbortKey='Escape';
-    elseif IsWindows
+        AbortKey='ESCAPE';
+          AbortKeyIndex=41;
+   elseif IsWindows
         myKeyMap=[49 50 51 52]; % for 1, 2, 3, 4
         AbortKey='esc';
           AbortKeyIndex=27;

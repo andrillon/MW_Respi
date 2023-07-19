@@ -27,16 +27,17 @@ if flag_1diodes % at the begining of each probe, turn the din1 to white
     WaitSecs(0.3);
     Screen('Flip',w);
 end
-        resprec=0;
 
 %% play SART
+resprec=0;
+lastpress=0;
 if this_blockcond==1 % faces
     %%% Init
     starttra=GetSecs;
     ntrial=1;
     block_starttime(nblock)=GetSecs;
     
-        start_blocktraining=GetSecs;
+    start_blocktraining=GetSecs;
     dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
     
     this_seq_trial=all_seq(ntrial);
@@ -57,7 +58,7 @@ if this_blockcond==1 % faces
     if flag_1diodes % at the begining of each probe, turn the din1 to white
         Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
     end
-
+    
     Screen('DrawTexture', w, this_image_R,[],RightRect,[],[]);
     Screen('DrawTexture', w, this_image_L,[],LeftRect,[],[]);
     Screen('Flip',w);
@@ -87,13 +88,17 @@ if this_blockcond==1 % faces
         end
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && resprec==0
+            if keyIsDown && (resprec==0) && (lastpress==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
-                thisresptime=keySecs;
+                thisresptime=keySecs; disp(thisresptime-stimonset)
                 resprec=1;
+                lastpress=1;
                 if flag_PPort
                     SendTrigger(trig_response);
                 end
+            end
+            if (keyIsDown==0) && (resprec==0) % if no press but response already given then revert laspress
+                lastpress=0;
             end
         end
         FlipSec=Screen('Flip',w);
@@ -101,8 +106,8 @@ if this_blockcond==1 % faces
         count=count+1;
         
         if GetSecs>stimonset+dur_face_presentation_rand % update face identity
-                  resprec=0;
-  this_nogo=NaN;
+            resprec=0;
+            this_nogo=NaN;
             this_go=NaN;
             if this_seq_trial==TargetID && isnan(thisresp)
                 this_nogo=1;
@@ -130,10 +135,14 @@ if this_blockcond==1 % faces
                 SendTrigger(trig_startTrial+this_seq_trial);
             end
             if flag_EyeLink
-        Eyelink('Message', sprintf('TB%g_T%g_S%g',nblock,ntrial,this_seq_trial));
+                Eyelink('Message', sprintf('TB%g_T%g_S%g',nblock,ntrial,this_seq_trial));
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
+            end
+            [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
+            if (keyIsDown==0)
+                lastpress=0;
             end
         end
         
@@ -146,7 +155,7 @@ elseif this_blockcond==2
     starttra=GetSecs;
     ntrial=1;
     block_starttime(nblock)=GetSecs;
-        start_blocktraining=GetSecs;
+    start_blocktraining=GetSecs;
     this_seq_trial=all_seq(ntrial);
     this_image_L=imge_indexes(1);
     this_image_R=imge_indexes(2);
@@ -166,7 +175,7 @@ elseif this_blockcond==2
     if flag_1diodes % at the begining of each probe, turn the din1 to white
         Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
     end
-
+    
     
     Screen('DrawTexture', w, this_image_R,[],RightRect,[],[]);
     Screen('DrawTexture', w, this_image_L,[],LeftRect,[],[]);
@@ -207,13 +216,17 @@ elseif this_blockcond==2
         end
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && resprec==0
+            if keyIsDown && (resprec==0) && (lastpress==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
-                thisresptime=keySecs;
+                thisresptime=keySecs; disp(thisresptime-stimonset)
                 resprec=1;
-                                if flag_PPort
+                lastpress=1;
+                if flag_PPort
                     SendTrigger(trig_response);
                 end
+            end
+            if (keyIsDown==0) && (resprec==0) % if no press but response already given then revert laspress
+                lastpress=0;
             end
         end
         FlipSec=Screen('Flip',w);
@@ -221,8 +234,8 @@ elseif this_blockcond==2
         count=count+1;
         
         if GetSecs>stimonset+dur_face_presentation_rand % update face identity
-                   resprec=0;
- this_nogo=NaN;
+            resprec=0;
+            this_nogo=NaN;
             this_go=NaN;
             if this_seq_trial==TargetID && isnan(thisresp)
                 this_nogo=1;
@@ -249,10 +262,14 @@ elseif this_blockcond==2
                 SendTrigger(trig_startTrial+this_seq_trial);
             end
             if flag_EyeLink
-        Eyelink('Message', sprintf('TB%g_T%g_S%g',nblock,ntrial,this_seq_trial));
+                Eyelink('Message', sprintf('TB%g_T%g_S%g',nblock,ntrial,this_seq_trial));
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
+            end
+            [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
+            if (keyIsDown==0)
+                lastpress=0;
             end
         end
         

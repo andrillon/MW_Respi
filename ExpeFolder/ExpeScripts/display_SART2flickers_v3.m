@@ -24,6 +24,7 @@ if flag_EyeLink
 end
 %% play SART
 resprec=0;
+lastpress=0;
 if this_blockcond==1 % faces
     %%% Init
     starttra=GetSecs;
@@ -80,13 +81,17 @@ if this_blockcond==1 % faces
         
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && (resprec==0)
+            if keyIsDown && (resprec==0) && (lastpress==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
                 thisresptime=keySecs;
                 resprec=1;
+                lastpress=1;
                 if flag_PPort
                     SendTrigger(trig_response);
                 end
+            end
+            if (keyIsDown==0) && (resprec==0) % if no press but response already given then revert laspress
+                lastpress=0;
             end
             if GetSecs>this_probetime
                 probe_SART_v3;
@@ -116,7 +121,7 @@ if this_blockcond==1 % faces
             if thisresp==AbortKeyIndex
                 flag_escp=1;
             end
-            fprintf('NOGO: %g | GO: %g\n',this_nogo,this_go)
+            fprintf('NOGO: %g | GO: %g | RT %g\n',this_nogo,this_go,thisresptime-stimonset)
             test_res=[test_res; [nblock this_blockcond thiset ntrial this_seq_trial TargetID thisresp stimonset dur_face_presentation_rand thisresptime  this_nogo this_go]];
             dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
             
@@ -135,6 +140,10 @@ if this_blockcond==1 % faces
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
+            end
+                        [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
+            if (keyIsDown==0)
+                lastpress=0;
             end
         end
         
@@ -209,13 +218,17 @@ elseif this_blockcond==2
         
         while GetSecs<previousflip+diffflickertimes(count)-ifi/2
             [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
-            if keyIsDown && (resprec==0)
+            if keyIsDown && (resprec==0) && (lastpress==0)
                 thisresp=find(keyCode); thisresp=thisresp(1);
                 thisresptime=keySecs;
                 resprec=1;
+                lastpress=1;
                 if flag_PPort
                     SendTrigger(trig_response);
                 end
+            end
+            if (keyIsDown==0) && (resprec==0) % if no press but response already given then revert laspress
+                lastpress=0;
             end
             if GetSecs>this_probetime
                 probe_SART_v3;
@@ -245,7 +258,7 @@ elseif this_blockcond==2
             if thisresp==AbortKeyIndex
                 flag_escp=1;
             end
-            fprintf('NOGO: %g | GO: %g\n',this_nogo,this_go)
+            fprintf('NOGO: %g | GO: %g | RT %g\n',this_nogo,this_go,thisresptime-stimonset)
             test_res=[test_res; [nblock this_blockcond thiset ntrial this_seq_trial TargetID thisresp stimonset dur_face_presentation_rand thisresptime  this_nogo this_go]];
             dur_face_presentation_rand=dur_face_presentation + dur_face_presentation_jitter*rand;
             
@@ -262,6 +275,10 @@ elseif this_blockcond==2
             end
             if flag_1diodes % at the begining of each probe, turn the din1 to white
                 Screen('FillPoly', w ,[1 1 1]*255, din2_pos);
+            end
+                        [keyIsDown,keySecs, keyCode,deltaSecs] = KbCheck(-1);
+            if (keyIsDown==0)
+                lastpress=0;
             end
         end
         

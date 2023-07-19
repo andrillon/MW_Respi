@@ -32,8 +32,8 @@ probe_res=[];
 % else
 % end
 
-root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
-%root_path='C:\Users\marie\OneDrive\Documents\GitHub\MW_Respi\ExpeFolder\ExpeScripts';
+%root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
+root_path='C:\Users\marie\OneDrive\Documents\GitHub\MW_Respi\ExpeFolder\ExpeScripts';
 cd(root_path)
 addpath(pwd)
 
@@ -147,7 +147,7 @@ SubjectInfo.FlickerR=flicker_freqR;
 %% EEG
 if flag_EEG
     % Check that the MEX file io64 is in the path
-   OpenParPort( 64 );
+    OpenParPort( 64 );
     answerdebug2=input('Press 1 if EEG is recording (0 to abort):');
     if answerdebug2==0
         flag_escp=1;

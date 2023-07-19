@@ -22,7 +22,7 @@ probe_res=[];
 if ismac
     root_path='/Users/thandrillon/Work/ICM/MW_Respi/ExpeFolder/ExpeScripts';
 else
-root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
+    root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
 end
 cd(root_path)
 addpath(pwd)
@@ -50,25 +50,46 @@ flag_1diodes     = 0;
 flag_bip         = 0;
 flag_escp        = 0;
 
-supervised_questions = {...
-    'Were you looking\nat the screen?\n\n - Yes : Press 1\n - No : Press 2  ',...
-    'Where was your attention focus?\n\n - On-Task : Press 1\n\n - Off-Task : Press 2\n\n - Blank : Press 3\n\n - Don''t Remember : Press 4',...
-    'What distracted your attention from the task?\n\nSomething:\n\n - in the room : Press 1\n\n - personal : Press 2\n\n - about the task : Press 3',...
-    'How aware were you\nof your focus?\n\nFrom 1 : I was fully aware\n\nto  4 : I was not aware at all',...
-    'Was your state of mind\nintentional?\n\nFrom 1 : Entirely intentional\n\nto 4 : Entirely unintentional',...
-    ...
-    'How engaging\nwere your thoughts?\n\nFrom 1 : Not engaging\n\nto 4 : Very engaging',...
-    'How well do you think\nyou have been performing?\n\nFrom 1 : not good\n\nto 4 : very good',...
-    'How alert have you been:\n\n - Extremely alert : Press 1\n\n - Alert : Press 2\n\n - Sleepy : Press 3\n\n - Extremely sleepy : Press 4'};
+% supervised_questions = {...
+%     'Were you looking\nat the screen?\n\n - Yes : Press 1\n - No : Press 2  ',...
+%     'Where was your attention focus?\n\n - On-Task : Press 1\n\n - Off-Task : Press 2\n\n - Blank : Press 3\n\n - Don''t Remember : Press 4',...
+%     'What distracted your attention from the task?\n\nSomething:\n\n - in the room : Press 1\n\n - personal : Press 2\n\n - about the task : Press 3',...
+%     'How aware were you\nof your focus?\n\nFrom 1 : I was fully aware\n\nto  4 : I was not aware at all',...
+%     'Was your state of mind\nintentional?\n\nFrom 1 : Entirely intentional\n\nto 4 : Entirely unintentional',...
+%     ...
+%     'How engaging\nwere your thoughts?\n\nFrom 1 : Not engaging\n\nto 4 : Very engaging',...
+%     'How well do you think\nyou have been performing?\n\nFrom 1 : not good\n\nto 4 : very good',...
+%     'How alert have you been:\n\n - Extremely alert : Press 1\n\n - Alert : Press 2\n\n - Sleepy : Press 3\n\n - Extremely sleepy : Press 4'};
 
-supervised_questions_headers={'Just before the interruption',...
-    'Just before the interruption',...
-    'Just before the interruption',...
-    'Just before the interruption',...
-    'Just before the interruption',...
-    'Over the past few trials',...
-    'Over the past few trials',...
-    'Over the past few trials'};
+% supervised_questions_headers={'Just before the interruption',...
+%     'Just before the interruption',...
+%     'Just before the interruption',...
+%     'Just before the interruption',...
+%     'Just before the interruption',...
+%     'Over the past few trials',...
+%     'Over the past few trials',...
+%     'Over the past few trials'};
+
+supervised_questions = {...
+    "Regardiez-vous l'écran ?\n\n - Oui : Tapez 1\n - No : Tapez 2  ",...
+    'Sur quoi portait votre attention ?\n\n - Sur la tâche : Tapez 1\n\n - Sur autre-chose : Tapez 2\n\n - Sur rien : Tapez 3\n\n - Je ne sais plus : Tapez 4',...
+    "Qu'est-ce que qui a détourné\nvotre attention de la tâche ?\n\nQuelque chose:\n\n - dans la pièce : Tapez 1\n\n - de personnel : Tapez 2\n\n - à propos de la tâche : Tapez 3",...
+    "Dans quelle mesure étiez-vous\nconscient de votre niveau de concentration ?\n\nDe 1 : Complètement conscient\n\nà  4 : Je n'en étais pas conscient du tout",...
+    "Votre état d'esprit était-il intentionnel ?\n\nDe 1 : Complètement intentionnel\n\nà 4 : Complètement involontaire",...
+    ...
+    'A quel point vos pensées étaient-elles prenantes ?\n\nDe 1 : Pas du tout prenantes\n\nà 4 : très prenantes',...
+    'Comment jugeriez-vous votre performance ?\n\nDe 1 : très mauvaise\n\nà 4 : très bonne',...
+    "Quel était votre état d'éveil ?\n\n - Parfaitement éveillé : Tapez 1\n\n - éveillé : Tapez 2\n\n - Somnolent : Tapez 3\n\n - Très somnolent : Tapez 4"};
+
+supervised_questions_headers={
+    "Juste avant l'interruption",...
+    "Juste avant l'interruption",...
+    "Juste avant l'interruption",...
+    "Juste avant l'interruption",...
+    "Juste avant l'interruption",...
+    'Au cours des derniers essais',...
+    'Au cours des derniers essais',...
+    'Au cours des derniers essais'};
 
 supervised_questions_acceptedanswers={[1 2],[1 2 3 4],[1 2 3],[1:4],[1:4],[1:4],[1:4],[1:4]};
 
@@ -396,7 +417,8 @@ Screen('Flip',w);
 %% BASELINE
 if flag_skipbaseline==0 && flag_escp==0
     Screen('TextSize',w, InstrFont);
-    DrawFormattedText(w, 'We will now record how your brain responds\n\nto flickering stimuli\n\nPress any key when ready', 'center', 'center', [255 255 255]);
+    %DrawFormattedText(w, 'We will now record how your brain responds\n\nto flickering stimuli\n\nPress any key when ready', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Nous allons maintenant enregistrer comment\nvotre cerveau réagit aux stimuli clignotants\n\n Appuyez sur une touche quand vous êtes prêt', 'center', 'center', [255 255 255]);    
     Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
@@ -409,8 +431,8 @@ WaitSecs(3);
 %% TRAINING
 if flag_escp==1
     Screen('TextSize',w, InstrFont);
-    DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
-    Screen('Flip',w);
+    %DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Interruption de la session...', 'center', 'center', [255 255 255]);    Screen('Flip',w);
     WaitSecs(1);
     Screen('Flip',w);
 else
@@ -457,8 +479,8 @@ else
         end
         
         Screen('TextSize',w, InstrFont);
-        DrawFormattedText(w, 'You will now train on the attention task\n\nFirst with FACES\n\nRemember to respond to all stimuli\n\nEXCEPT the smiling face\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-        Screen('Flip',w);
+        %DrawFormattedText(w, 'You will now train on the attention task\n\nFirst with FACES\n\nRemember to respond to all stimuli\n\nEXCEPT the smiling face\n\nPress any key when ready', 'center', 'center', [255 255 255]);
+        DrawFormattedText(w, "Vous allez maintenant vous entraîner sur la tâche d'attention\n\nD'abord avec les VISAGES\n\nRappelez-vous de répondre à tous les stimuli\n\nSAUF au visage souriant\n\nAppuyez sur une touche quand vous êtes prêt", 'center', 'center', [255 255 255]);        Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
         Screen('Flip',w);
@@ -471,17 +493,17 @@ else
         perfGO=100*(nanmean(trai_res(trai_res(:,1)==1,12)));
         perfNOGO=100*(nanmean(trai_res(trai_res(:,1)==1,11)));
         meanRT=(nanmean(trai_res(trai_res(:,1)==1,10)-(trai_res(trai_res(:,1)==1,8))));
-                Screen('TextSize',w, InstrFont);
-DrawFormattedText(w,sprintf('You performance was\n%2.1f %% (press)\n%2.1f %% (no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
-        Screen('Flip',w);
+        Screen('TextSize',w, InstrFont);
+        %DrawFormattedText(w,sprintf('You performance was\n%2.1f %% (press)\n%2.1f %% (no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);
+        DrawFormattedText(w,sprintf('Votre performance était de\n%2.1f %% (appuis)\n%2.1f %% (non-appuis)\n%1.2fs (temps de réaction)\n\nAppuyez sur une touche quand vous êtes prêt',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);        Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
         Screen('Flip',w);
         
         KbReleaseWait
         Screen('TextSize',w, InstrFont);
-        DrawFormattedText(w, 'You will now train on the attention task\n\nwith DIGITS\n\nRemember to respond to all digits\n\nEXCEPT the digit 3\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-        Screen('Flip',w);
+        %DrawFormattedText(w, 'You will now train on the attention task\n\nwith DIGITS\n\nRemember to respond to all digits\n\nEXCEPT the digit 3\n\nPress any key when ready', 'center', 'center', [255 255 255]);
+        DrawFormattedText(w, "Vous allez maintenant vous entraîner sur la tâche d'attention\n\navec les CHIFFRES\n\nRappelez-vous de répondre à tous les stimuli\n\nSAUF au chiffre 3\n\nAppuyez sur une touche quand vous êtes prêt", 'center', 'center', [255 255 255]);        Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
         Screen('Flip',w);
@@ -493,9 +515,9 @@ DrawFormattedText(w,sprintf('You performance was\n%2.1f %% (press)\n%2.1f %% (no
         perfGO=100*(nanmean(trai_res(trai_res(:,1)==2,12)));
         perfNOGO=100*(nanmean(trai_res(trai_res(:,1)==2,11)));
         meanRT=(nanmean(trai_res(trai_res(:,1)==2,10)-(trai_res(trai_res(:,1)==2,8))));
-                Screen('TextSize',w, InstrFont);
-DrawFormattedText(w,sprintf('You performance was\n%2.1f %%(press)\n%2.1f %%(no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
-        Screen('Flip',w);
+        Screen('TextSize',w, InstrFont);
+        %DrawFormattedText(w,sprintf('You performance was\n%2.1f %%(press)\n%2.1f %%(no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
+        DrawFormattedText(w,sprintf('Votre performance était de\n%2.1f %% (appuis)\n%2.1f %% (non-appuis)\n%1.2fs (temps de réaction)\n\nAppuyez sur une touche quand vous êtes prêt',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);        Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
         Screen('Flip',w);
@@ -525,14 +547,14 @@ else
 end
 if flag_escp==1
     Screen('TextSize',w, InstrFont);
-    DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
-    Screen('Flip',w);
+    %DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Interruption de la session...', 'center', 'center', [255 255 255]);    Screen('Flip',w);
     WaitSecs(1);
     Screen('Flip',w);
 else
     Screen('TextSize',w, InstrFont);
-    DrawFormattedText(w, 'Ready to START?\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-    Screen('Flip',w);
+    %DrawFormattedText(w, 'Ready to START?\n\nPress any key when ready', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Prêt à commencer?\n\nAppuyez sur une touche quand vous êtes prêt', 'center', 'center', [255 255 255]);    Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
     Screen('Flip',w);
@@ -590,8 +612,8 @@ while nblock < maxblock && flag_escp==0
     this_blockcond  = block_type(block_perm(nblock));
     thiset          = set_images(block_perm(nblock));
     Screen('TextSize',w, InstrFont);
-    DrawFormattedText(w, sprintf('Part %g over %g\n\nPress any key when ready',nblock,length(block_perm)), 'center', 'center', [255 255 255]);
-    Screen('Flip',w);
+    %DrawFormattedText(w, sprintf('Part %g over %g\n\nPress any key when ready',nblock,length(block_perm)), 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, sprintf('Partie %g sur %g\n\nAppuyez sur une touche quand vous êtes prêt',nblock,length(block_perm)), 'center', 'center', [255 255 255]);    Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
     Screen('Flip',w);
@@ -646,8 +668,8 @@ ListenChar(0);
 Screen('Flip',w);
 Screen('TextSize',w, InstrFont);
 if  flag_escp==0
-DrawFormattedText(w, 'Congratulations!\n\nYou''re done!\n\nThank you for your participation', 'center', 'center', [255 255 255]);
-Screen('Flip',w);
+%DrawFormattedText(w, 'Congratulations!\n\nYou''re done!\n\nThank you for your participation', 'center', 'center', [255 255 255]);
+DrawFormattedText(w, 'Félicitations!\n\nVous avez terminé!\n\nMerci de votre participation', 'center', 'center', [255 255 255]);Screen('Flip',w);
 WaitSecs(5);
 end
 

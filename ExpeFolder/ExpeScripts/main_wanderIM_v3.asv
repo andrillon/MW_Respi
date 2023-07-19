@@ -426,8 +426,7 @@ Screen('Flip',w);
 %% BASELINE
 if flag_skipbaseline==0 && flag_escp==0
     Screen('TextSize',w, InstrFont);
-    %DrawFormattedText(w, 'We will now record how your brain responds\n\nto flickering stimuli\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, 'Nous allons maintenant enregistrer comment votre cerveau réagit aux stimuli clignotants\n\n Appuyez sur une touche quand vous êtes prêt', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'We will now record how your brain responds\n\nto flickering stimuli\n\nPress any key when ready', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
@@ -440,8 +439,7 @@ WaitSecs(3);
 %% TRAINING
 if flag_escp==1
     Screen('TextSize',w, InstrFont);
-    %DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, 'Interruption de la session...', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     WaitSecs(1);
     Screen('Flip',w);
@@ -489,8 +487,7 @@ else
         end
         
         Screen('TextSize',w, InstrFont);
-        %DrawFormattedText(w, 'You will now train on the attention task\n\nFirst with FACES\n\nRemember to respond to all stimuli\n\nEXCEPT the smiling face\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-        DrawFormattedText(w, "Vous allez maintenant vous entraîner sur la tâche d'attention\n\nD'abord avec les VISAGES\n\nRappelez-vous de répondre à tous les stimuli\n\nSAUF au visage souriant\n\nAppuyez sur une touche quand vous êtes prêt", 'center', 'center', [255 255 255]);
+        DrawFormattedText(w, 'You will now train on the attention task\n\nFirst with FACES\n\nRemember to respond to all stimuli\n\nEXCEPT the smiling face\n\nPress any key when ready', 'center', 'center', [255 255 255]);
         Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
@@ -504,9 +501,8 @@ else
         perfGO=100*(nanmean(trai_res(trai_res(:,1)==1,12)));
         perfNOGO=100*(nanmean(trai_res(trai_res(:,1)==1,11)));
         meanRT=(nanmean(trai_res(trai_res(:,1)==1,10)-(trai_res(trai_res(:,1)==1,8))));
-        Screen('TextSize',w, InstrFont);
-        %DrawFormattedText(w,sprintf('You performance was\n%2.1f %% (press)\n%2.1f %% (no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);
-        DrawFormattedText(w,sprintf('Votre performance était de\n%2.1f %% (appuis)\n%2.1f %% (non-appuis)\n%1.2fs (temps de réaction)\n\nAppuyez sur une touche quand vous êtes prêt',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);
+                Screen('TextSize',w, InstrFont);
+DrawFormattedText(w,sprintf('You performance was\n%2.1f %% (press)\n%2.1f %% (no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
         Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
@@ -514,8 +510,7 @@ else
         
         KbReleaseWait
         Screen('TextSize',w, InstrFont);
-        %DrawFormattedText(w, 'You will now train on the attention task\n\nwith DIGITS\n\nRemember to respond to all digits\n\nEXCEPT the digit 3\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-        DrawFormattedText(w, "Vous allez maintenant vous entraîner sur la tâche d'attention\n\navec les CHIFFRES\n\nRappelez-vous de répondre à tous les stimuli\n\nSAUF au chiffre 3\n\nAppuyez sur une touche quand vous êtes prêt", 'center', 'center', [255 255 255]);
+        DrawFormattedText(w, 'You will now train on the attention task\n\nwith DIGITS\n\nRemember to respond to all digits\n\nEXCEPT the digit 3\n\nPress any key when ready', 'center', 'center', [255 255 255]);
         Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
@@ -528,9 +523,8 @@ else
         perfGO=100*(nanmean(trai_res(trai_res(:,1)==2,12)));
         perfNOGO=100*(nanmean(trai_res(trai_res(:,1)==2,11)));
         meanRT=(nanmean(trai_res(trai_res(:,1)==2,10)-(trai_res(trai_res(:,1)==2,8))));
-        Screen('TextSize',w, InstrFont);
-        %DrawFormattedText(w,sprintf('You performance was\n%2.1f %%(press)\n%2.1f %%(no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
-        DrawFormattedText(w,sprintf('Votre performance était de\n%2.1f %% (appuis)\n%2.1f %% (non-appuis)\n%1.2fs (temps de réaction)\n\nAppuyez sur une touche quand vous êtes prêt',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);
+                Screen('TextSize',w, InstrFont);
+DrawFormattedText(w,sprintf('You performance was\n%2.1f %%(press)\n%2.1f %%(no-press)\n%1.2fs (response-time)\n\nPress any key to continue',perfGO,perfNOGO,meanRT), 'center', 'center', [255 255 255]);%
         Screen('Flip',w);
         KbWait(-1);
         KbReleaseWait(-1);
@@ -561,15 +555,13 @@ else
 end
 if flag_escp==1
     Screen('TextSize',w, InstrFont);
-    %DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, 'Interruption de la session...', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Aborting session...', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     WaitSecs(1);
     Screen('Flip',w);
 else
     Screen('TextSize',w, InstrFont);
-    %DrawFormattedText(w, 'Ready to START?\n\nPress any key when ready', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, 'Prêt à commencer?\n\nAppuyez sur une touche quand vous êtes prêt', 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Ready to START?\n\nPress any key when ready', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
@@ -628,8 +620,7 @@ while nblock < maxblock && flag_escp==0
     this_blockcond  = block_type(block_perm(nblock));
     thiset          = set_images(block_perm(nblock));
     Screen('TextSize',w, InstrFont);
-    %DrawFormattedText(w, sprintf('Part %g over %g\n\nPress any key when ready',nblock,length(block_perm)), 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, sprintf('Partie %g sur %g\n\nAppuyez sur une touche quand vous êtes prêt',nblock,length(block_perm)), 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, sprintf('Part %g over %g\n\nPress any key when ready',nblock,length(block_perm)), 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     KbReleaseWait(-1);
@@ -685,8 +676,7 @@ ListenChar(0);
 Screen('Flip',w);
 Screen('TextSize',w, InstrFont);
 if  flag_escp==0
-%DrawFormattedText(w, 'Congratulations!\n\nYou''re done!\n\nThank you for your participation', 'center', 'center', [255 255 255]);
-DrawFormattedText(w, 'Félicitations!\n\nVous avez terminé!\n\nMerci de votre participation', 'center', 'center', [255 255 255]);
+DrawFormattedText(w, 'Congratulations!\n\nYou''re done!\n\nThank you for your participation', 'center', 'center', [255 255 255]);
 Screen('Flip',w);
 WaitSecs(5);
 end

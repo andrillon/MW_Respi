@@ -10,7 +10,8 @@ for nseq=1:200
     end
     all_seq=[all_seq rand_seq];
 end
-DrawFormattedText(w, 'Get ready to start the task', 'center', 'center', [255, 255, 255]);
+%DrawFormattedText(w, 'Get ready to resume the task', 'center', 'center', [255, 255, 255]);
+DrawFormattedText(w, 'Préparez-vous à reprendre la tâche', 'center', 'center', [255, 255, 255]);
 Screen('Flip',w);
 WaitSecs(2);
 

@@ -96,6 +96,7 @@ end
 if flag_EyeLink
     Eyelink('Message', sprintf('EP%g',this_probe));
 end
-DrawFormattedText(w, 'Get ready to resume the task', 'center', 'center', [255, 255, 255]);
+%DrawFormattedText(w, 'Get ready to resume the task', 'center', 'center', [255, 255, 255]);
+DrawFormattedText(w, 'Préparez-vous à reprendre la tâche', 'center', 'center', [255, 255, 255]);
 Screen('Flip',w);
 WaitSecs(2);

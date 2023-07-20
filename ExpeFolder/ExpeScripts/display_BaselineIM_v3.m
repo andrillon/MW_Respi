@@ -36,7 +36,7 @@ actualflickertimes=[];
 
 %% Instructions
 %DrawFormattedText(w, 'You will first have to look at flickering stimuli\n\nKeep your eyes at the center of the screen during stimulation\n\nAvoid blinking or moving\n\nPress any key to continue', 'center', 'center', [255 255 255]);
-DrawFormattedText(w, "Vous allez d'abord regarder des stimuli clignotants\n\nMaintenez votre regard au centre de l'écran pendant la présentation des stimuli\n\nEvitez de cligner des yeux ou de bouger\n\nAppuez sur une touche pour continuer", 'center', 'center', [255 255 255]);
+DrawFormattedText(w, 'Vous allez d''abord regarder des stimuli clignotants\n\nMaintenez votre regard au centre de l''écran pendant la présentation des stimuli\n\nEvitez de cligner des yeux ou de bouger\n\nAppuez sur une touche pour continuer", 'center', 'center', [255 255 255]);
 Screen('Flip',w);
 KbWait(-1);
 
@@ -126,7 +126,7 @@ for nloop=1:2
         Eyelink('Message', sprintf('EB%g_S%g',nloop,1));
     end
     %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Séquence terminée\n\nAppuyez sur la barre d''espace pour continuer\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
@@ -207,7 +207,7 @@ for nloop=1:2
         Eyelink('Message', sprintf('EB%g_S%g',nloop,2));
     end
     %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Séquence terminée\n\nAppuyez sur la barre d''espace pour continuer\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
@@ -286,7 +286,7 @@ for nloop=1:2
         Eyelink('Message', sprintf('EB%g_S%g',nloop,3));
     end
     %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Séquence terminée\n\nAppuyez sur la barre d''espace pour continuer\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);
@@ -366,7 +366,7 @@ for nloop=1:2
         Eyelink('Message', sprintf('EB%g_S%g',nloop,4));
     end
     %DrawFormattedText(w, 'Sequence over\n\nPress the space bar to continue\n\n', 'center', 'center', [255 255 255]);
-    DrawFormattedText(w, "Séquence terminée\n\nAppuyez sur la barre d'espace pour continuer\n\n", 'center', 'center', [255 255 255]);
+    DrawFormattedText(w, 'Séquence terminée\n\nAppuyez sur la barre d''espace pour continuer\n\n', 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     KbWait(-1);
     Screen('Flip',w);

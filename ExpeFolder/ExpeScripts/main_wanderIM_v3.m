@@ -37,14 +37,14 @@ all_GrandStart=GetSecs;
 stim_path=[root_path filesep '..' filesep 'ExpeStim'];
 
 % Select debug mode (1 or 0), EEG (1 or 0), Tobii (1 or 0)
-flag_smallw     = 1;
+flag_smallw     = 0;
 answerdebug=input('Type 0 (no) or 1 (yes, debug)');
 flag_debug      = answerdebug;
-flag_EEG        = 0; % EEG segments to be added in the future
-flag_PPort      = 0; % Set to 1 if there is a parallel port to send triggers
-flag_EyeLink      = 0; % Tobii segments to be added in the future
+flag_EEG        = 1; % EEG segments to be added in the future
+flag_PPort      = 1; % Set to 1 if there is a parallel port to send triggers
+flag_EyeLink      = 1; % Tobii segments to be added in the future
 flag_skiptraining = 0;
-flag_skipbaseline = 1;
+flag_skipbaseline = 0;
 flag_2diodes     = 0;
 flag_1diodes     = 0;
 flag_bip         = 0;

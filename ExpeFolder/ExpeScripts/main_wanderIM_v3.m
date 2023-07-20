@@ -19,12 +19,12 @@ test_res=[];
 probe_res=[];
 
 % add the folder in the path
-% if ismac
-%     root_path='/Users/thandrillon/Work/ICM/MW_Respi/ExpeFolder/ExpeScripts';
-% else
-%     root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
-% end
-root_path='C:\Users\marie\OneDrive\Documents\GitHub\MW_Respi\ExpeFolder\ExpeScripts';
+if ismac
+    root_path='/Users/thandrillon/Work/ICM/MW_Respi/ExpeFolder/ExpeScripts';
+else
+    root_path='C:\manips\MW_RESPI\ExpeFolder\ExpeScripts';
+end
+%root_path='C:\Users\marie\OneDrive\Documents\GitHub\MW_Respi\ExpeFolder\ExpeScripts';
 cd(root_path)
 addpath(pwd)
 % add PTB in the path
